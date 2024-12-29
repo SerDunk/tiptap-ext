@@ -3,9 +3,23 @@
 @tailwind utilities;
 
 pre {
-  @apply bg-gray-800 text-white p-4 overflow-auto whitespace-pre-wrap;
+  background-color: black;
+  color: white;
+  padding: 1rem;
 }
 
-code {
-  @apply font-mono text-sm;
+.ProseMirror {
+  width: 30rem;
+  height: 20rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 2px solid black;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
