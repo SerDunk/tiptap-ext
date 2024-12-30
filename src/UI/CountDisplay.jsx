@@ -1,5 +1,5 @@
 const CountDisplay = ({ wordCount }) => {
-  return <div className="bg-black text-white">{wordCount}</div>;
+  return <div className="text-sm text-gray-800">word count: {wordCount}</div>;
 };
 
 export default CountDisplay;

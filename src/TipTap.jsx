@@ -1,34 +1,37 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WordCount } from "./Extensions/WordCount";
 import CountDisplay from "./UI/CountDisplay";
 
 const Tiptap = () => {
   const [wordCount, setWordCount] = useState(0);
 
-  const handleWordCount = () => {
-    const count = editor.commands.setWordCount();
-    setWordCount(count);
-  };
   const editor = useEditor({
     extensions: [StarterKit, WordCount],
-    content: ``,
+    content: "",
   });
 
-  if (!editor) {
-    return null;
-  }
+  useEffect(() => {
+    if (!editor) return;
+
+    const updateWordCount = () => {
+      const count = editor.storage.wordCount.words || 0;
+      setWordCount(count);
+    };
+
+    editor.on("update", updateWordCount);
+
+    return () => {
+      editor.off("update", updateWordCount);
+    };
+  }, [editor]);
+
+  if (!editor) return null;
 
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <EditorContent editor={editor} />
-      <button
-        onClick={() => handleWordCount()}
-        className="p-2 mt-4 bg-yellow-500 text-white rounded"
-      >
-        Give Word Count
-      </button>
       <CountDisplay wordCount={wordCount} />
     </div>
   );
